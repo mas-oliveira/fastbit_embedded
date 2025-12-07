@@ -11,3 +11,19 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/marco
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-07 12:26:32.551
 !MESSAGE Started RMI Server, listening on port 41341
+!SESSION 2025-12-07 21:57:00.178 -----------------------------------------------
+eclipse.buildId=Version 2.0.0
+java.version=21.0.8
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=pt_PT
+Framework arguments:  -keyring /Users/marcooliveira/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/marcooliveira/.eclipse_keyring -data /Users/marcooliveira/Documents/Cursos/embedded_fastbit/course_repo/course_1_embedded_for_begginers/My_workspace/target
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-12-07 21:57:06.785
+!MESSAGE Log4j2 initialized with config file /Users/marcooliveira/Documents/Cursos/embedded_fastbit/course_repo/course_1_embedded_for_begginers/My_workspace/target/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-07 21:57:11.592
+!MESSAGE Started RMI Server, listening on port 41343
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-12-07 22:04:46.853
+!MESSAGE Indexed '000TestProject' (3 sources, 53 headers) in 0,729 sec: 1 954 declarations; 2 863 references; 0 unresolved inclusions; 2 syntax errors; 2 unresolved names (0,042%)
