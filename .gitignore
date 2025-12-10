@@ -1,0 +1,5 @@
+# STM32CubeIDE / Eclipse crap
+**/.metadata/
+**/.plugins/
+*.snap
+
