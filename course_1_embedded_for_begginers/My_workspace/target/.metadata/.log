@@ -23,3 +23,15 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/marco
 
 !ENTRY org.eclipse.cdt.core 1 0 2025-12-10 22:24:31.614
 !MESSAGE Indexed '002SizeOf' (3 sources, 55 headers) in 0,225 sec: 2 100 declarations; 3 016 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0,039%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-12-10 22:51:56.193
+!MESSAGE Indexed '003Add' (3 sources, 53 headers) in 0,221 sec: 1 954 declarations; 2 863 references; 0 unresolved inclusions; 2 syntax errors; 2 unresolved names (0,042%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-12-10 23:04:13.199
+!MESSAGE Indexed '003Add' (3 sources, 55 headers) in 0,223 sec: 2 103 declarations; 3 016 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0,039%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-12-10 23:06:17.500
+!MESSAGE Indexed '003Add' (3 sources, 55 headers) in 0,169 sec: 2 103 declarations; 3 016 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0,039%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-12-10 23:06:20.583
+!MESSAGE Indexed '003Add' (3 sources, 55 headers) in 0,145 sec: 2 103 declarations; 3 016 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0,039%)
