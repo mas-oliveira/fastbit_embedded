@@ -22,17 +22,24 @@
 int main(void)
 {
     /* Loop forever */
-	uint32_t *rcc_ahb1enr = (uint32_t*)0x40023830, *gpio_mode_register = (uint32_t*)0x40020000, *gpio_output_data = (uint32_t*)0x40020014;
+	uint32_t *pClkCtrlReg   = (uint32_t *) 0x40023830;
+	uint32_t *pPortAModeReg = (uint32_t *) 0x40020000;
+	uint32_t *pPortAOutReg  = (uint32_t *) 0x40020014;
 
 	//Wake up clock GPIO A by changing the memory address 0x40023830 to 1 in the last bit
-	*rcc_ahb1enr |= 0x00000001;
+	*pClkCtrlReg |= (1 << 0); // Shift number 1 once to change the first bit SET BIT 0
 
-	//Change the mode register to output by changing the memory address 0x4002000 with 01 in MODER9 and MODER5
-	*gpio_mode_register |= 0x00040400;
+
+	//Change the mode register to output by changing the memory address 0x4002000 with
+	// 01 in MODER9 => SET BIT 18
+	// 01 in MODER5 => SET BIT 10
+	*pPortAModeReg |= (1 << 18);
+	*pPortAModeReg |= (1 << 10);
+
 
 	for(;;) {
 		//Toggle the LED by switching to 1 and 0 the bits 9 (LD1) and 5 (LD2) in the memory address 0x40020014
-		*gpio_output_data ^= 0x00000220;
+		*pPortAOutReg ^= 0x00000220;
 		for (volatile uint32_t i = 0; i < 500000; i++);
 	}
 }
