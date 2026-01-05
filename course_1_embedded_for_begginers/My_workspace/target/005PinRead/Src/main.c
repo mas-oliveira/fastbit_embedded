@@ -6,7 +6,7 @@
  ******************************************************************************
  * @attention
  *
- * Copyright (c) 2025 STMicroelectronics.
+ * Copyright (c) 2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -23,6 +23,7 @@ int main(void)
 {
 	uint32_t *pClkCtrlReg   = (uint32_t *) 0x40023830;
 	uint32_t *pPortAModeReg = (uint32_t *) 0x40020000;
+	uint32_t *pPortAInReg  = (uint32_t *) 0x40020010;
 	uint32_t *pPortAOutReg  = (uint32_t *) 0x40020014;
 
 	//Wake up clock GPIO A by changing the memory address 0x40023830 to 1 in the last bit
@@ -36,9 +37,23 @@ int main(void)
 	*pPortAModeReg |= (1 << 10);
 
 
+	// Checking if reset status is applied - extracting bit 0 and bit 1 of port A mode register (must be 00 to be in input)
+	// Logic of bit extraction - Section 20
+	if( (*pPortAModeReg & 0x0001) || ((*pPortAModeReg << 1) & 0x0002) ) {
+		*pPortAModeReg &= 0; // Clear bit 0
+		*pPortAModeReg &= (0 << 1); // Clear bit 1
+	}
+
+
+    /* Loop forever */
+
 	for(;;) {
-		//Toggle the LED by switching to 1 and 0 the bits 9 (LD1) and 5 (LD2) in the memory address 0x40020014
-		*pPortAOutReg ^= 0x00000220;
-		for (volatile uint32_t i = 0; i < 500000; i++);
+		if (*pPortAInReg & 0x0001) {
+			// Turn ON LD2 - bit 5 output register
+			*pPortAOutReg |= (1 << 5);
+		} else {
+			// Turn OFF LD2 - bit 5 output
+			*pPortAOutReg &= ~(1 << 5);
+		}
 	}
 }
