@@ -3,3 +3,21 @@
 **/.plugins/
 *.snap
 
+.project
+.cproject
+.settings/
+*.launch
+
+# Build artifacts
+Debug/
+Release/
+*.elf
+*.map
+*.list
+*.o
+*.d
+*.su
+*.cyclo
+
+# Workspace metadata
+.metadata/

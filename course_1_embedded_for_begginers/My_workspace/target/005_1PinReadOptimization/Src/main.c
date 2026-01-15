@@ -21,10 +21,10 @@
 
 int main(void)
 {
-	uint32_t volatile *pClkCtrlReg   = (uint32_t *) 0x40023830;
-	uint32_t volatile *pPortAModeReg = (uint32_t *) 0x40020000;
-	uint32_t volatile *pPortAInReg  = (uint32_t *) 0x40020010;
-	uint32_t volatile *pPortAOutReg  = (uint32_t *) 0x40020014;
+	uint32_t volatile *const pClkCtrlReg   = (uint32_t *) 0x40023830;
+	uint32_t volatile *const pPortAModeReg = (uint32_t *) 0x40020000;
+	uint32_t const volatile *const pPortAInReg  = (uint32_t *) 0x40020010;
+	uint32_t volatile *const pPortAOutReg  = (uint32_t *) 0x40020014;
 
 	//Wake up clock GPIO A by changing the memory address 0x40023830 to 1 in the last bit
 	*pClkCtrlReg |= (1 << 0); // Shift number 1 once to change the first bit SET BIT 0
