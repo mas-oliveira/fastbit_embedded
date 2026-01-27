@@ -22,41 +22,32 @@
 
 int main(void)
 {
-	RCC_AHB1ENR_t pClkCtrl;
-	uint32_t volatile *const pClkCtrlReg = (uint32_t *) CLK_CTRL_REG_ADDR;
+	RCC_AHB1ENR_t volatile *const pClkCtrlReg     = (RCC_AHB1ENR_t *) CLK_CTRL_REG_ADDR;
 
-	GPIO_MODER_t pPortAMode;
-	uint32_t volatile *const pPortAModeReg = (uint32_t *) GPIOA_MODER_REG_ADDR;
+	GPIO_MODER_t volatile *const pPortAModeReg    = (GPIO_MODER_t *) GPIOA_MODER_REG_ADDR;
 
-	GPIO_IDR_t pPortAIn;
-	uint32_t const volatile *const pPortAInReg  = (uint32_t *) (GPIOA_MODER_REG_ADDR + GPIOA_MODER_IN_OFFSET);
+	GPIO_IDR_t const volatile *const pPortAInReg  = (GPIO_IDR_t *) (GPIOA_MODER_REG_ADDR + GPIOA_MODER_IN_OFFSET);
 
-	GPIO_ODR_t pPortAOut;
-	uint32_t volatile *const pPortAOutReg  = (uint32_t *) (GPIOA_MODER_REG_ADDR + GPIOA_MODER_OUT_OFFSET);
+	GPIO_ODR_t volatile *const pPortAOutReg       = (GPIO_ODR_t *) (GPIOA_MODER_REG_ADDR + GPIOA_MODER_OUT_OFFSET);
 
 	//Wake up clock GPIO A by changing the memory address 0x40023830 to 1 in the last bit
-	pClkCtrl.RCC_AHB1ENR_BITS.GPIOAEN = 1; // Shift number 1 once to change the first bit SET BIT 0
-	*pClkCtrlReg |= pClkCtrl.REG;
+	pClkCtrlReg -> RCC_AHB1ENR_BITS.GPIOAEN = 1; // Shift number 1 once to change the first bit SET BIT 0
 
 
 	//Change the mode register to output by changing the memory address 0x4002000 with
 	// 01 in MODER5 => SET BIT 10
-	pPortAMode.GPIO_MODER_BITS.MODER5 = 1;
-	*pPortAModeReg |= pPortAMode.REG;
+	pPortAModeReg -> GPIO_MODER_BITS.MODER5 = 1;
 
 
 	/* Loop forever */
 
 	for(;;) {
-		pPortAIn.REG = *pPortAInReg;
-		if (pPortAIn.GPIO_IDR_BITS.IDR0) {
+		if (pPortAInReg -> GPIO_IDR_BITS.IDR0) {
 			// Turn ON LD2 - bit 5 output register
-			pPortAOut.GPIO_ODR_BITS.ODR5 = 1;
-			*pPortAOutReg |= pPortAOut.REG;
+			pPortAOutReg -> GPIO_ODR_BITS.ODR5 = 1;
 		} else {
 			// Turn OFF LD2 - bit 5 output
-			pPortAOut.GPIO_ODR_BITS.ODR5 = 0;
-			*pPortAOutReg &= pPortAOut.REG;
+			pPortAOutReg -> GPIO_ODR_BITS.ODR5 = 0;
 		}
 	}
 }

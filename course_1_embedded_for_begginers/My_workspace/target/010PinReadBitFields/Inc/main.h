@@ -8,6 +8,8 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
+#include <stdint.h>
+
 #define CLK_CTRL_REG_ADDR        ((uint32_t)0x40023830)
 #define RCC_AHB1ENR_RST          ((uint32_t)0x00000000)
 
