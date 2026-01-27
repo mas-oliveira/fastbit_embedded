@@ -8,10 +8,20 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
-uint32_t RCC_AHB1ENR_RST = (uint32_t) 0x00000000;
+#define CLK_CTRL_REG_ADDR        ((uint32_t)0x40023830)
+#define RCC_AHB1ENR_RST          ((uint32_t)0x00000000)
+
+#define GPIOA_MODER_REG_ADDR     ((uint32_t) 0x40020000)
+#define GPIOA_MODER_IN_OFFSET    ((uint32_t) 0x00000010)
+#define GPIOA_MODER_OUT_OFFSET   ((uint32_t) 0x00000014)
+#define GPIO_MODER_PORT_A_RST    ((uint32_t) 0xA8000000)
+#define GPIO_MODER_PORT_B_RST    ((uint32_t) 0x00000280)
+#define GPIO_MODER_DEFAULT_RST   ((uint32_t) 0x00000000)
+
+#define GPIO_ODR_RST             ((uint32_t) 0x00000000)
 
 typedef union {
-	uint32_t REG;
+    uint32_t REG;
 
 	struct {
 		uint32_t GPIOAEN     :1; // GPIO A ENABLE
@@ -35,11 +45,6 @@ typedef union {
 	} RCC_AHB1ENR_BITS;
 
 } RCC_AHB1ENR_t;             // AHB1 (bus) Peripheral Clock Enable Register
-
-
-uint32_t GPIO_MODER_PORT_A_RST = (uint32_t) 0xA8000000;
-uint32_t GPIO_MODER_PORT_B_RST = (uint32_t) 0x00000280;
-uint32_t GPIO_MODER_RST 	   = (uint32_t) 0x00000000;
 
 typedef union {
 	uint32_t REG;
@@ -89,10 +94,8 @@ typedef union {
 
 } GPIO_IDR_t; // GPIO Input Data Register
 
-uint32_t GPIO_ODR_RST = (uint32_t) 0x00000000;
-
 typedef union {
-	uint32_t volatile *const REG;
+	uint32_t REG;
 
 	struct {
 	uint32_t ODR0  :1; // PIN 0 Input Data Register

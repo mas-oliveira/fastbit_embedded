@@ -18,41 +18,45 @@
 
 #include <stdint.h>
 
+#include "main.h"
+
 int main(void)
 {
-	uint32_t volatile *const pClkCtrlReg   = (uint32_t *) 0x40023830; //TODO: Experimentar com esta struct o volatile e assim do union e ver se da para mudar o bit map
-	uint32_t volatile *const pPortAModeReg = (uint32_t *) 0x40020000;
-	uint32_t const volatile *const pPortAInReg  = (uint32_t *) 0x40020010;
-	uint32_t volatile *const pPortAOutReg  = (uint32_t *) 0x40020014;
+	RCC_AHB1ENR_t pClkCtrl;
+	uint32_t volatile *const pClkCtrlReg = (uint32_t *) CLK_CTRL_REG_ADDR;
+
+	GPIO_MODER_t pPortAMode;
+	uint32_t volatile *const pPortAModeReg = (uint32_t *) GPIOA_MODER_REG_ADDR;
+
+	GPIO_IDR_t pPortAIn;
+	uint32_t const volatile *const pPortAInReg  = (uint32_t *) (GPIOA_MODER_REG_ADDR + GPIOA_MODER_IN_OFFSET);
+
+	GPIO_ODR_t pPortAOut;
+	uint32_t volatile *const pPortAOutReg  = (uint32_t *) (GPIOA_MODER_REG_ADDR + GPIOA_MODER_OUT_OFFSET);
 
 	//Wake up clock GPIO A by changing the memory address 0x40023830 to 1 in the last bit
-	*pClkCtrlReg |= (1 << 0); // Shift number 1 once to change the first bit SET BIT 0
+	pClkCtrl.RCC_AHB1ENR_BITS.GPIOAEN = 1; // Shift number 1 once to change the first bit SET BIT 0
+	*pClkCtrlReg |= pClkCtrl.REG;
 
 
 	//Change the mode register to output by changing the memory address 0x4002000 with
-	// 01 in MODER9 => SET BIT 18
 	// 01 in MODER5 => SET BIT 10
-	*pPortAModeReg |= (1 << 18);
-	*pPortAModeReg |= (1 << 10);
-
-
-	// Checking if reset status is applied - extracting bit 0 and bit 1 of port A mode register (must be 00 to be in input)
-	// Logic of bit extraction - Section 20
-	if( (*pPortAModeReg & 0x0001) || ((*pPortAModeReg << 1) & 0x0002) ) {
-		*pPortAModeReg &= 0; // Clear bit 0
-		*pPortAModeReg &= (0 << 1); // Clear bit 1
-	}
+	pPortAMode.GPIO_MODER_BITS.MODER5 = 1;
+	*pPortAModeReg |= pPortAMode.REG;
 
 
 	/* Loop forever */
 
 	for(;;) {
-		if (*pPortAInReg & 0x0001) {
+		pPortAIn.REG = *pPortAInReg;
+		if (pPortAIn.GPIO_IDR_BITS.IDR0) {
 			// Turn ON LD2 - bit 5 output register
-			*pPortAOutReg |= (1 << 5);
+			pPortAOut.GPIO_ODR_BITS.ODR5 = 1;
+			*pPortAOutReg |= pPortAOut.REG;
 		} else {
 			// Turn OFF LD2 - bit 5 output
-			*pPortAOutReg &= ~(1 << 5);
+			pPortAOut.GPIO_ODR_BITS.ODR5 = 0;
+			*pPortAOutReg &= pPortAOut.REG;
 		}
 	}
 }
